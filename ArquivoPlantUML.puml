@@ -1,0 +1,82 @@
+@startuml
+skinparam classAttributeIconSize 0
+class EstadoFinalizado{
++ EstadoFinalizado(quiosque : Quiosque)
++ identificarAluno(matricula : String) : void
++ escolherMinicurso(minicurso : String) : void
++ informarCartao(cartao : String) : void
++ finalizar() : void
++ getState() : PadraoState
+}
+EstadoFinalizado ..|> PadraoState
+class EstadoProcessando{
+- quiosque : Quiosque
+- minicursoEscolhido : String
++ EstadoProcessando(quiosque : Quiosque, minicurso : String)
++ identificarAluno(matricula : String) : void
++ escolherMinicurso(minicurso : String) : void
++ informarCartao(cartao : String) : void
++ finalizar() : void
++ getState() : PadraoState
+}
+EstadoProcessando ..|> PadraoState
+class EstadoIdentificado{
+- quiosque : Quiosque
+- matricula : String
++ EstadoIdentificado(quiosque : Quiosque, matricula : String)
++ identificarAluno(matricula : String) : void
++ escolherMinicurso(minicurso : String) : void
++ informarCartao(cartao : String) : void
++ finalizar() : void
++ getState() : PadraoState
+- matriculaExistente(matricula : String) : boolean
+}
+EstadoIdentificado ..|> PadraoState
+class Main{
++ {static} main(args : String[]) : void
+}
+class EstadoEmEspera{
+- quiosque : Quiosque
++ EstadoEmEspera(quiosque : Quiosque)
+- matriculaExistente(matricula : String) : boolean
++ identificarAluno(matricula : String) : void
++ escolherMinicurso(minicurso : String) : void
++ informarCartao(cartao : String) : void
++ finalizar() : void
++ getState() : PadraoState
+}
+EstadoEmEspera ..|> PadraoState
+class Quiosque{
+- state : PadraoState
++ Quiosque()
++ setState(state : PadraoState) : void
++ getState() : PadraoState
++ identificarAluno(matricula : String) : void
++ escolherMinicurso(minicurso : String) : void
++ informarCartao(cartao : String) : void
++ finalizar() : void
+}
+class EstadoInscrito{
+- quiosque : Quiosque
+- minicursoSelecionado : String
++ EstadoInscrito(quiosque : Quiosque, minicurso : String)
++ identificarAluno(matricula : String) : void
++ escolherMinicurso(minicurso : String) : void
++ informarCartao(cartao : String) : void
++ finalizar() : void
++ getState() : PadraoState
+}
+EstadoInscrito ..|> PadraoState
+EstadoProcessando--"- quiosque" Quiosque
+EstadoIdentificado--"- quiosque" Quiosque
+EstadoEmEspera--"- quiosque" Quiosque
+Quiosque--"- state" PadraoState
+EstadoInscrito--"- quiosque" Quiosque
+interface PadraoState{
+identificarAluno(matricula : String) : void
+escolherMinicurso(minicurso : String) : void
+informarCartao(cartao : String) : void
+finalizar() : void
+getState() : PadraoState
+}
+@enduml
